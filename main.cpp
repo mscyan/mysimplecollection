@@ -5,7 +5,6 @@
 using namespace std;
 int main() {
 
-    s_time *s = new s_time();
-    s->printTime();
+
     return 0;
 }
