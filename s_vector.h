@@ -11,14 +11,24 @@
 //动态数组，实现vector的一些功能；
 #include <stdlib.h>
 #include <string.h>
+#include <iostream>
 template <typename T>
 class s_vector
 {
+    friend ostream & operator << (ostream &out, s_vector<T>);
 public:
     s_vector();
 
-    T operator [](int index);
-    ostream operator << (int index);
+    T operator [](int index)
+    {
+        if(index < _size)
+        {
+            return data[index];
+        }
+        T t;
+        return t;
+    }
+
 
     void push_back(T val);
     void clear();
@@ -26,7 +36,6 @@ public:
     void reverse();
     void print_all();
     int size();
-    int length();
     T *begin();
     T *end();
     T first();
@@ -34,24 +43,14 @@ public:
 private:
     int _size = 0;
     int capacity = 16;
-    T data[];
+    T data[16];
+    void allocate(int mem);
 };
 
 template<typename T>
 s_vector<T>::s_vector() {
     T arr[capacity];
     *data = *arr;
-}
-
-//重载运算符
-template<typename T>
-T s_vector<T>::operator[](int index) {
-    if(index < _size)
-    {
-        return data[index];
-    }
-    cout<<"invalid index "<<endl;
-    return nullptr;
 }
 
 template<typename T>
@@ -63,10 +62,8 @@ void s_vector<T>::push_back(T val) {
     }
     else
     {
-        capacity *= 2;
-        T arr[capacity];
-        memcpy(data, arr, sizeof(*data));
-        *data = *arr;
+        allocate(capacity);
+        capacity *= capacity;
         data[_size] = val;
         _size ++;
     }
@@ -77,16 +74,27 @@ template<typename T>
 void s_vector<T>::print_all() {
     for(int i=0;i<_size;i++)
     {
-        cout<<data[i]<<" ";
+        cout<<data[i];
+        cout<<" ";
     }cout<<endl;
 }
 
 template<typename T>
-int s_vector<T>::length() {
+ostream & operator<<(ostream &out, s_vector<T> element) {
+    out<<element;
+    return out;
+}
+
+template<typename T>
+int s_vector<T>::size() {
     return _size;
 }
 
-//template<typename T>
-//ostream s_vector<T>::operator<<(T element) {
-//    cout<<element;
-//}
+//当capacity等于size时，如果需要添加元素，则需要扩容，否则data[]无法承载；
+//扩容一倍；
+template<typename T>
+void s_vector<T>::allocate(int mem) {
+    cout<<"扩容了一倍"<<endl;
+    T *arr = (T *) malloc(sizeof(T) *mem);
+    *data = arr;
+}
