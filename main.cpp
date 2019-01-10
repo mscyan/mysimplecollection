@@ -8,7 +8,7 @@ using namespace std;
 int main() {
 
     s_vector<int> v;
-    for(int i=0;i<20;i++)
+    for(int i=0;i<80;i++)
     {
         v.push_back(i*5 + 2);
     }
@@ -19,7 +19,17 @@ int main() {
         cout<<v[i]<<" ";
     }cout<<endl;
 
-//    int *pa = (int *) malloc(sizeof(int) * 5);
-//    cout<<pa[0]<<endl;
+    cout<<v.empty()<<endl;
+//    v.clear();
+    cout<<v.empty()<<endl;
+    v.reverse();
+    v.print_all();
+    cout<<endl;
+    v.info();
+
+    person *p = new person();
+    s_vector<person *> vp;
+    vp.push_back(p);
+    vp.info();
     return 0;
 }

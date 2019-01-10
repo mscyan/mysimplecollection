@@ -25,7 +25,7 @@ public:
         {
             return data[index];
         }
-        T t;
+        T t = (T) 0;
         return t;
     }
 
@@ -36,25 +36,28 @@ public:
     void reverse();
     void print_all();
     int size();
-    T *begin();
-    T *end();
+//    T *begin();
+//    T *end();
     T first();
     T last();
+    void info();
 private:
     int _size = 0;
     int capacity = 16;
-    T data[16];
+    T *data = (T *) malloc(16 * sizeof(T));
     void allocate(int mem);
 };
 
 template<typename T>
-s_vector<T>::s_vector() {
+s_vector<T>::s_vector()
+{
     T arr[capacity];
     *data = *arr;
 }
 
 template<typename T>
-void s_vector<T>::push_back(T val) {
+void s_vector<T>::push_back(T val)
+{
     if(_size < capacity)
     {
         data[_size] = val;
@@ -62,8 +65,8 @@ void s_vector<T>::push_back(T val) {
     }
     else
     {
+        capacity *= 2;
         allocate(capacity);
-        capacity *= capacity;
         data[_size] = val;
         _size ++;
     }
@@ -71,30 +74,85 @@ void s_vector<T>::push_back(T val) {
 }
 
 template<typename T>
-void s_vector<T>::print_all() {
+void s_vector<T>::print_all()
+{
     for(int i=0;i<_size;i++)
     {
-        cout<<data[i];
-        cout<<" ";
-    }cout<<endl;
+        cout<<data[i]<<" ";
+    }
 }
 
 template<typename T>
-ostream & operator<<(ostream &out, s_vector<T> element) {
+ostream & operator<<(ostream &out, s_vector<T> element)
+{
     out<<element;
     return out;
 }
 
 template<typename T>
-int s_vector<T>::size() {
+int s_vector<T>::size()
+{
     return _size;
 }
 
 //当capacity等于size时，如果需要添加元素，则需要扩容，否则data[]无法承载；
 //扩容一倍；
 template<typename T>
-void s_vector<T>::allocate(int mem) {
-    cout<<"扩容了一倍"<<endl;
+void s_vector<T>::allocate(int mem)
+{
     T *arr = (T *) malloc(sizeof(T) *mem);
-    *data = arr;
+    memcpy(arr, data, mem);
 }
+
+template<typename T>
+T s_vector<T>::first()
+{
+    if(!empty())
+    {
+        return data[0];
+    }
+    return (T) 0;
+}
+
+template<typename T>
+T s_vector<T>::last()
+{
+    if(!empty())
+    {
+        return data[_size-1];
+    }
+    return (T) 0;
+}
+
+template<typename T>
+bool s_vector<T>::empty()
+{
+    return _size == 0;
+}
+
+template<typename T>
+void s_vector<T>::clear()
+{
+    data = (T *) malloc(8 * sizeof(T));
+    _size = 0;
+    capacity = 16;
+}
+
+template<typename T>
+void s_vector<T>::reverse()
+{
+    for(int i=0;i<_size / 2;i++)
+    {
+        T tmp = data[i];
+        data[i] = data[_size - i];
+        data[_size - i] = tmp;
+    }
+}
+
+template<typename T>
+void s_vector<T>::info()
+{
+    cout<< "capacity = " << capacity << "; size = " << _size << "; sizeof(T) = " << sizeof(T) <<endl;
+}
+
+
