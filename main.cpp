@@ -8,20 +8,19 @@ using namespace std;
 int main() {
 
     s_vector<int> v;
-    for(int i=0;i<80;i++)
+    for(int i=0;i<30;i++)
     {
-        v.push_back(i*5 + 2);
+        v.push_back(i);
     }
     v.print_all();
-    cout<<"length : "<<v.size()<<endl;
-    for(int i=0;i<20;i++)
-    {
-        cout<<v[i]<<" ";
-    }cout<<endl;
+//    for(int i=0;i<20;i++)
+//    {
+//        cout<<v[i]<<" ";
+//    }cout<<endl;
 
-    cout<<v.empty()<<endl;
+//    cout<<v.empty()<<endl;
 //    v.clear();
-    cout<<v.empty()<<endl;
+//    cout<<v.empty()<<endl;
     v.reverse();
     v.print_all();
     cout<<endl;

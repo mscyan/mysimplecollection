@@ -79,7 +79,7 @@ void s_vector<T>::print_all()
     for(int i=0;i<_size;i++)
     {
         cout<<data[i]<<" ";
-    }
+    }cout<<endl;
 }
 
 template<typename T>
@@ -144,8 +144,8 @@ void s_vector<T>::reverse()
     for(int i=0;i<_size / 2;i++)
     {
         T tmp = data[i];
-        data[i] = data[_size - i];
-        data[_size - i] = tmp;
+        data[i] = data[_size - i - 1];
+        data[_size - i - 1] = tmp;
     }
 }
 
